@@ -17,18 +17,35 @@ public class BattleSceneController : MonoBehaviour
     private Text _winLoseStateText;
 
     [SerializeField]
+    private Text _commandStateText;
+
+    [SerializeField]
+    private Text _abilityText;
+
+    [SerializeField]
     private GameObject _pauseMenu;
 
     [SerializeField]
     private GameObject _endMenu;
 
+    [SerializeField]
+    private GameObject _abilityPanel;
+
     public Text SceneStateText => _sceneStateText;
 
     public Text TurnStateText => _turnStateText;
+
+    public Text WinLoseStateText => _winLoseStateText;
+
+    public Text CommandStateText => _commandStateText;
+
+    public Text AbilityText => _abilityText;
 
     public GameObject PauseMenu => _pauseMenu;
 
     public GameObject EndMenu => _endMenu;
 
-    public Text WinLoseStateText => _winLoseStateText;
+    public GameObject AbilityPanel => _abilityPanel;
+
+    
 }
