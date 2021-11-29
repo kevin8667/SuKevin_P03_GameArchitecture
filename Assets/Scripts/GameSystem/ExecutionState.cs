@@ -21,7 +21,14 @@ public class ExecutionState : State
 
         _stateText.text = "Executing...";
 
+        foreach(GameObject button in GameObject.FindGameObjectsWithTag("CommandButton"))
+        {
+            button.SetActive(false);
+        }
+
         Debug.Log(_stateMachine.CurrentState);
+
+
     }
 
     public override void Exit()

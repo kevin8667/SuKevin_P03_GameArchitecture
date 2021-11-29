@@ -7,11 +7,14 @@ public class CommandingState : State
 {
     Text _stateText;
     CommandFSM _stateMachine;
+    GameObject[] _commandButtons;
 
-    public CommandingState(CommandFSM stateMachine, Text stateText)
+
+    public CommandingState(CommandFSM stateMachine, Text stateText, GameObject[] commandButtons)
     {
         _stateMachine = stateMachine;
         _stateText = stateText;
+        _commandButtons = commandButtons;
     }
 
     // Start is called before the first frame update
@@ -19,6 +22,12 @@ public class CommandingState : State
     {
 
         _stateText.text = "Commanding...";
+
+        foreach (GameObject button in _commandButtons)
+        {
+            button.SetActive(true);
+        }
+
         Debug.Log(_stateMachine.CurrentState);
 
     }

@@ -8,6 +8,7 @@ public class CharacterManager : MonoBehaviour
     public List<GameObject> _playerChrList = new List<GameObject>();
     public List<GameObject> _enemyChrList = new List<GameObject>();
 
+    public int _currentCharacter;
 
     private List<int> _SPDList = new List<int>();
 
@@ -17,6 +18,7 @@ public class CharacterManager : MonoBehaviour
 
     private void Awake()
     {
+        _currentCharacter = 0;
         GameObject[] _allCharacter = GameObject.FindGameObjectsWithTag("Character");
         foreach (GameObject character in _allCharacter)
         {

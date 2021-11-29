@@ -17,7 +17,32 @@ public interface ICommand
         set;
     }
 
-    void Execute();
+    string Name
+    {
+        get;
+        set;
+    }
+
+    AbilityLoader.AbilityType AbilityType
+    {
+        get;
+        set;
+    }
+
+    float AbilityPower
+    {
+        get;
+        set;
+    }
+
+    int AbilityCost
+    {
+        get;
+        set;
+    }
+
+
+    void Execute(List<GameObject> target, int index);
 
 
 }
