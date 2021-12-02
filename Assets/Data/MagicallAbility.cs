@@ -56,6 +56,7 @@ public class MagicallAbility : MagicData , IMagic
         AbilityCost = _cost;
     }
 
+    // Overload-ish method to implement AOE type ability
     public void Execute(List<GameObject> target, int index)
     {
         Controller.AbilityPanel.SetActive(true);

@@ -151,6 +151,7 @@ public class CursorManager : MonoBehaviour
     }
 
 
+    //Reload manu everytime the menu changes
     public void ResetMenu(GameObject cursor)
     {
         _menuItems.Clear();
@@ -204,7 +205,7 @@ public class CursorManager : MonoBehaviour
     }
 
  
-
+    //moving cursor
     private void MovingCursor(GameObject cursor)
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -259,6 +260,7 @@ public class CursorManager : MonoBehaviour
             Debug.Log(_menuItems[_menuIndex].name);
         }
     }
+
 
 
     private void Decide()

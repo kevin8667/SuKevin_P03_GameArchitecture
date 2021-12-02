@@ -53,14 +53,6 @@ public class CharacterManager : MonoBehaviour
         ListEditor(_characterList);
 
 
-        for (int i = 0; i < _playerChrList.Count; i++)
-        {
-            _battleSceneController.PlayerChrNameText[i].text = _playerChrList[i].name;
-            _battleSceneController.PlayerChrHPText[i].text = "HP: " + _playerChrList[i].GetComponent<Attr>().HP.ToString();
-            _battleSceneController.PlayerChrMPText[i].text = "MP: " + _playerChrList[i].GetComponent<Attr>().MP.ToString();
-        }
-
-
 
 
     }
@@ -105,12 +97,6 @@ public class CharacterManager : MonoBehaviour
 
             StartCoroutine(ExecuteWinSequence(1));
 
-        }
-
-        for (int i = 0; i < _playerChrList.Count; i++)
-        {
-            _battleSceneController.PlayerChrHPText[i].text = "HP: " + _playerChrList[i].GetComponent<Attr>().HP.ToString();
-            _battleSceneController.PlayerChrMPText[i].text = "MP: " + _playerChrList[i].GetComponent<Attr>().MP.ToString();
         }
 
         RemoveDead();

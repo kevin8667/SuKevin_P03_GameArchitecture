@@ -522,8 +522,8 @@ MonoBehaviour:
   _physicalAbilityTypes: 0000000000000000
   _magicalAbilityTypes: 
   _physicalAbilityPower:
-  - 2
   - 5
+  - 6
   _MagicalAbilityPower: []
   _physicalAbilityCost: 0000000014000000
   _MagicalAbilityCost: 
@@ -543,14 +543,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9eeef6c88addc14dadcd095c11ff042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  _nameText: {fileID: 0}
+  _hpText: {fileID: 0}
+  _mpText: {fileID: 0}
+  HP: 150
   MP: 100
-  ATK: 10
+  ATK: 12
   DEF: 10
   VIT: 10
-  STR: 10
-  INT: 10
-  WIS: 10
+  STR: 12
+  INT: 3
+  WIS: 6
   DEX: 10
   SPD: 20
 --- !u!114 &136714301
@@ -1743,14 +1746,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9eeef6c88addc14dadcd095c11ff042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  _nameText: {fileID: 1401695902}
+  _hpText: {fileID: 142276042}
+  _mpText: {fileID: 1593125689}
+  HP: 150
   MP: 100
-  ATK: 10
-  DEF: 10
-  VIT: 10
-  STR: 10
-  INT: 10
-  WIS: 10
+  ATK: 15
+  DEF: 15
+  VIT: 13
+  STR: 13
+  INT: 3
+  WIS: 5
   DEX: 10
   SPD: 10
 --- !u!1 &463937659
@@ -3156,7 +3162,6 @@ Transform:
   - {fileID: 2143195496}
   - {fileID: 16820208}
   - {fileID: 1653810113}
-  - {fileID: 1655970785}
   m_Father: {fileID: 2037484080}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3272,9 +3277,9 @@ MonoBehaviour:
   _magicalAbilityTypes: 020000000200000003000000
   _physicalAbilityPower: []
   _MagicalAbilityPower:
-  - 2
-  - 5
   - 4
+  - 6
+  - 5
   _physicalAbilityCost: 
   _MagicalAbilityCost: 000000001400000014000000
   _physicalAbilityList: []
@@ -3294,14 +3299,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9eeef6c88addc14dadcd095c11ff042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  _nameText: {fileID: 0}
+  _hpText: {fileID: 0}
+  _mpText: {fileID: 0}
+  HP: 150
   MP: 100
   ATK: 10
   DEF: 10
-  VIT: 10
-  STR: 10
-  INT: 10
-  WIS: 10
+  VIT: 5
+  STR: 5
+  INT: 15
+  WIS: 15
   DEX: 10
   SPD: 5
 --- !u!114 &902636260
@@ -4637,7 +4645,7 @@ RectTransform:
   - {fileID: 567262362}
   - {fileID: 1190517499}
   m_Father: {fileID: 2037484080}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5240,14 +5248,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9eeef6c88addc14dadcd095c11ff042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  _nameText: {fileID: 2014401552}
+  _hpText: {fileID: 463937661}
+  _mpText: {fileID: 533571056}
+  HP: 120
   MP: 100
-  ATK: 10
-  DEF: 10
+  ATK: 12
+  DEF: 9
   VIT: 10
-  STR: 10
-  INT: 10
-  WIS: 10
+  STR: 12
+  INT: 5
+  WIS: 11
   DEX: 10
   SPD: 15
 --- !u!224 &1470321201 stripped
@@ -5708,12 +5719,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655970784}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 6.11, y: 0.99, z: 0}
-  m_LocalScale: {x: 0.2566, y: 0.2566, z: 0.2566}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 541.0344, y: 23.859678, z: 3629.1382}
+  m_LocalScale: {x: 27.7128, y: 27.7128, z: 27.712797}
   m_Children: []
-  m_Father: {fileID: 830488142}
-  m_RootOrder: 5
+  m_Father: {fileID: 2037484080}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &1655970786
 SpriteRenderer:
@@ -5830,14 +5841,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9eeef6c88addc14dadcd095c11ff042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  _nameText: {fileID: 1766990787}
+  _hpText: {fileID: 1541810031}
+  _mpText: {fileID: 739823822}
+  HP: 90
   MP: 100
   ATK: 10
   DEF: 10
   VIT: 10
   STR: 10
-  INT: 10
-  WIS: 10
+  INT: 15
+  WIS: 15
   DEX: 10
   SPD: 5
 --- !u!224 &1703558523 stripped
@@ -6166,7 +6180,7 @@ RectTransform:
   - {fileID: 2065404473}
   - {fileID: 2040749935}
   m_Father: {fileID: 2037484080}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7094,6 +7108,7 @@ RectTransform:
   - {fileID: 1047741543}
   - {fileID: 830488142}
   - {fileID: 588035583}
+  - {fileID: 1655970785}
   - {fileID: 1803557566}
   - {fileID: 1292297638}
   m_Father: {fileID: 0}
