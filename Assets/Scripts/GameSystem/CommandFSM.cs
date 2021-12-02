@@ -7,7 +7,11 @@ public class CommandFSM : StateMachineMB
     [SerializeField]
     BattleSceneController _controller;
 
-    [SerializeField] GameObject[] _commandButtons;
+    [SerializeField] 
+    GameObject[] _commandButtons;
+
+    [SerializeField]
+    EnemyManager _enemyManager;
 
     public CommandingState Commanding{ get; private set; }
 
@@ -15,12 +19,13 @@ public class CommandFSM : StateMachineMB
 
     private void Awake()
     {
-        Commanding = new CommandingState(this, _controller.CommandStateText, _commandButtons);
-        Executing = new ExecutionState(this, _controller.CommandStateText);
+        
     }
 
     void Start()
     {
+        Commanding = new CommandingState(this, _controller.CommandStateText, _commandButtons, _enemyManager, _controller);
+        Executing = new ExecutionState(this, _controller.CommandStateText);
         ChangeState(Commanding);
     }
 
@@ -35,9 +40,8 @@ public class CommandFSM : StateMachineMB
         if (CurrentState == Commanding)
         {
             ChangeState(Executing);
-
-            
         }
         
     }
+
 }

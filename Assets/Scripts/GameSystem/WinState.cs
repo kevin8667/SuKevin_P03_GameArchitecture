@@ -25,6 +25,8 @@ public class WinState : State
 
         _stateText.text = "You Win!";
 
+        Time.timeScale = 0;
+
 
     }
 
@@ -34,7 +36,7 @@ public class WinState : State
 
         _endMenu.SetActive(false);
 
-
+        Time.timeScale = 1;
     }
 
     public override void Update()

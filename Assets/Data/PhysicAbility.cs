@@ -6,8 +6,8 @@ using System;
 [CreateAssetMenuAttribute(fileName = "New Physical Data", menuName = "Ability Data/Physical")]
 public class PhysicAbility : PhysicData, IPhysical
 {
-    public static event Action<GameObject, GameObject> PhysicalAbilityCalculation;
-    public static event Action<GameObject, List<GameObject>> AOEPhysicalAbilityCalculation;
+    public static event Action<GameObject, GameObject, float> PhysicalAbilityCalculation;
+    public static event Action<GameObject, List<GameObject>, float> AOEPhysicalAbilityCalculation;
 
     public BattleSceneController Controller
     {
@@ -50,6 +50,7 @@ public class PhysicAbility : PhysicData, IPhysical
         Character = _gameObject;
         Controller = _battleSceneController.GetComponent<BattleSceneController>();
         Name = _abilityName;
+        AbilityType = _abilityType;
         AbilityPower = _power;
         AbilityCost = _cost;
     }
@@ -58,13 +59,23 @@ public class PhysicAbility : PhysicData, IPhysical
     {
         Controller.AbilityPanel.SetActive(true);
         Controller.AbilityText.text = Character.name + "'s " + Name + "!";
+
+        Character.GetComponent<controller>().Attack();
+
         if (AbilityType == AbilityLoader.AbilityType.SinglePhysicalAttack)
         {
-            PhysicalAbilityCalculation?.Invoke(Character ,target[index]);
+
+            PhysicalAbilityCalculation?.Invoke(Character ,target[index], AbilityPower);
+
+            Character.GetComponent<Attr>().MP -= AbilityCost;
+
         }
         else if (AbilityType == AbilityLoader.AbilityType.AOEPhysicalAttack)
         {
-            AOEPhysicalAbilityCalculation?.Invoke(Character ,target);
+
+            AOEPhysicalAbilityCalculation?.Invoke(Character ,target, AbilityPower);
+
+            Character.GetComponent<Attr>().MP -= AbilityCost;
         }
         
     }

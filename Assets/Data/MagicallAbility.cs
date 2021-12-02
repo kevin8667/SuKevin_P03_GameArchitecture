@@ -6,8 +6,8 @@ using System;
 [CreateAssetMenuAttribute(fileName = "New Magical Data", menuName = "Ability Data/Magical")]
 public class MagicallAbility : MagicData , IMagic
 {
-    public static event Action<GameObject, GameObject> MagicalAbilityCalculation;
-    public static event Action<GameObject, List<GameObject>> AOEMagicalAbilityCalculation;
+    public static event Action<GameObject, GameObject, float> MagicalAbilityCalculation;
+    public static event Action<GameObject, List<GameObject>, float> AOEMagicalAbilityCalculation;
 
     public BattleSceneController Controller
     {
@@ -59,13 +59,23 @@ public class MagicallAbility : MagicData , IMagic
     public void Execute(List<GameObject> target, int index)
     {
         Controller.AbilityPanel.SetActive(true);
+        
         Controller.AbilityText.text = Character.name + "'s " + Name + "!";
-        if(AbilityType == AbilityLoader.AbilityType.SingleMagicalAttack)
+
+        Character.GetComponent<controller>().Attack();
+
+        if (AbilityType == AbilityLoader.AbilityType.SingleMagicalAttack)
         {
-            MagicalAbilityCalculation?.Invoke(Character, target[index]);
-        }else if(AbilityType == AbilityLoader.AbilityType.AOEMagicalAttack)
+            MagicalAbilityCalculation?.Invoke(Character, target[index], AbilityPower);
+
+            Character.GetComponent<Attr>().MP -= AbilityCost;
+
+        }
+        else if(AbilityType == AbilityLoader.AbilityType.AOEMagicalAttack)
         {
-            AOEMagicalAbilityCalculation?.Invoke(Character,target);
+            AOEMagicalAbilityCalculation?.Invoke(Character,target, AbilityPower);
+
+            Character.GetComponent<Attr>().MP -= AbilityCost;
         }
         
 

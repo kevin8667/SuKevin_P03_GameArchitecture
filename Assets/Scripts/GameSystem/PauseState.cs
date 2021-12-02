@@ -24,6 +24,8 @@ public class PauseState : State
         _stateText.text = "PauseState";
 
         _pauseMenu.SetActive(true);
+
+        Time.timeScale = 0;
     }
 
     public override void Exit()
@@ -33,6 +35,8 @@ public class PauseState : State
         _pauseMenu.SetActive(false);
 
         _stateMachine.ChangeState(_stateMachine.PlayState);
+
+        Time.timeScale = 1;
 
     }
 

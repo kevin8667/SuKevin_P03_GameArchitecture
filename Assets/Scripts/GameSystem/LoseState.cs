@@ -25,7 +25,9 @@ public class LoseState : State
         
         _stateText.text = "You Lose!";
 
-        
+        Time.timeScale = 0;
+
+
     }
 
     public override void Exit()
@@ -33,6 +35,8 @@ public class LoseState : State
         base.Exit();
 
         _endMenu.SetActive(false);
+
+        Time.timeScale = 1;
 
 
     }

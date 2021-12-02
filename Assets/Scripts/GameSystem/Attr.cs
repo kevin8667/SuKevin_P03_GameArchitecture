@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attr : MonoBehaviour
 {
     public int HP;
+    public int MP;
     public int ATK;
     public int DEF;
     public int VIT;

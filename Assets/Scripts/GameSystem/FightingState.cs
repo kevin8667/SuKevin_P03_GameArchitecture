@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayState : State
+public class FightingState : State
 {
     Text _stateText;
-    SceneFSM _stateMachine;
-    public PlayState(SceneFSM stateMachine, Text stateText)
+    ConditionFSM _stateMachine;
+    public FightingState(ConditionFSM stateMachine)
     {
         _stateMachine = stateMachine;
-        _stateText = stateText;
+
     }
 
 
     public override void Enter()
-    { 
-        _stateText.text = "PlayState";
+    {
+       
         Time.timeScale = 1;
     }
 

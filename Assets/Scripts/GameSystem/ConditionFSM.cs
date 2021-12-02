@@ -11,17 +11,20 @@ public class ConditionFSM : StateMachineMB
 
     public LoseState Lose { get; private set; }
 
+    public FightingState Fighting { get; private set; }
+
     private void Awake()
     {
         Win = new WinState(this, _controller.WinLoseStateText, _controller.EndMenu);
         Lose = new LoseState(this, _controller.WinLoseStateText, _controller.EndMenu);
+        Fighting = new FightingState(this);
 
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ChangeState(Fighting);
     }
 
     public void WinTheGame()
@@ -32,6 +35,11 @@ public class ConditionFSM : StateMachineMB
     public void LoseTheGame()
     {
         ChangeState(Lose);
+    }
+
+    public void PlayTheGame()
+    {
+        ChangeState(Fighting);
     }
 
 }

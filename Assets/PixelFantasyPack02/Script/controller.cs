@@ -75,4 +75,14 @@ public class controller : MonoBehaviour {
         sprite.flipX = true;
         animator.SetInteger("direction", 1);
     }
+
+    public void Attack()
+    {
+        animator.SetTrigger("attack");
+    }
+
+    public void Die()
+    {
+        animator.SetBool("die", true);
+    }
 }

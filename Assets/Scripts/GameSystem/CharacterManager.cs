@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -12,19 +13,32 @@ public class CharacterManager : MonoBehaviour
 
     private List<int> _SPDList = new List<int>();
 
+    BattleSceneController _battleSceneController;
+
     IPlayer _Iplayer;
     IEnemy _IEnemy;
+
+    bool _isDead;
+
+    ConditionFSM _conditionFSM;
 
 
     private void Awake()
     {
         _currentCharacter = 0;
+
         GameObject[] _allCharacter = GameObject.FindGameObjectsWithTag("Character");
+
+        _battleSceneController = GameObject.Find("BattleSceneController").GetComponent<BattleSceneController>();
+
+        _conditionFSM = GameObject.Find("ConditionFSM").GetComponent<ConditionFSM>();
+
+        _isDead = false;
+
         foreach (GameObject character in _allCharacter)
         {
             _characterList.Add(character);
         }
-
 
         for (int i = 0; i < _characterList.Count; i++)
         {
@@ -33,13 +47,27 @@ public class CharacterManager : MonoBehaviour
 
         }
 
+        
         SortOrder(_characterList);
+
         ListEditor(_characterList);
+
+
+        for (int i = 0; i < _playerChrList.Count; i++)
+        {
+            _battleSceneController.PlayerChrNameText[i].text = _playerChrList[i].name;
+            _battleSceneController.PlayerChrHPText[i].text = "HP: " + _playerChrList[i].GetComponent<Attr>().HP.ToString();
+            _battleSceneController.PlayerChrMPText[i].text = "MP: " + _playerChrList[i].GetComponent<Attr>().MP.ToString();
+        }
+
+
+
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -58,10 +86,39 @@ public class CharacterManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            SortOrder(_characterList);
-            PrintOrder(_characterList);
+            _enemyChrList[0].GetComponent<Attr>().HP = 0;
         }
 
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            _playerChrList[0].GetComponent<Attr>().HP = 0;
+
+        }
+
+        if(_playerChrList.Count == 0)
+        {
+            StartCoroutine(ExecuteLoseSequence(1));
+        }
+
+        if(_enemyChrList.Count == 0)
+        {
+
+            StartCoroutine(ExecuteWinSequence(1));
+
+        }
+
+        for (int i = 0; i < _playerChrList.Count; i++)
+        {
+            _battleSceneController.PlayerChrHPText[i].text = "HP: " + _playerChrList[i].GetComponent<Attr>().HP.ToString();
+            _battleSceneController.PlayerChrMPText[i].text = "MP: " + _playerChrList[i].GetComponent<Attr>().MP.ToString();
+        }
+
+        RemoveDead();
+
+
+        
+
+        
     }
 
     public void SortOrder(List<GameObject> _characterList)
@@ -115,6 +172,53 @@ public class CharacterManager : MonoBehaviour
 
             }
         }
+    }
+
+    public void RemoveDead()
+    {
+            
+        foreach (GameObject chr in _characterList)
+        {
+            
+            if (chr.GetComponent<Attr>().HP <= 0)
+            {
+                _isDead = true;
+                if (_isDead == true)
+                {
+                    if (chr.GetComponent<IPlayer>() != null)
+                    {
+                        chr.GetComponent<controller>().Die();
+                        _playerChrList.Remove(chr);
+                        _isDead = false;
+
+                    }
+                    else if (chr.GetComponent<IEnemy>() != null)
+                    {
+                        chr.GetComponent<controller>().Die();
+                        _enemyChrList.Remove(chr);
+                        _isDead = false;
+                    }
+                }
+                _characterList.Remove(chr);
+                break;
+                
+            }
+        }
+
+    }
+
+    private IEnumerator ExecuteWinSequence(float commandDuration)
+    {
+         yield return new WaitForSeconds(commandDuration);
+        _conditionFSM.WinTheGame();
+
+    }
+
+    private IEnumerator ExecuteLoseSequence(float commandDuration)
+    {
+        yield return new WaitForSeconds(commandDuration);
+        _conditionFSM.LoseTheGame();
+
     }
 
 }

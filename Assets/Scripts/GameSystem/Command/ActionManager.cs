@@ -12,57 +12,90 @@ public class ActionManager : MonoBehaviour
 
     List<GameObject> _targetList;
 
-    List<int> _targetIndex;
+    public List<int> _targetIndex;
 
     AbilityLoader _abilityLoader;
 
-    private List<ICommand> _commands;
+    public List<ICommand> _commands;
+
+    CursorManager _cursorManager;
+
+    CommandFSM _commandFSM;
 
     private void Awake()
     {
-        
+        _targetIndex = new List<int>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         _chrManager = GameObject.Find("CharacterManager").GetComponent<CharacterManager>();
+        _cursorManager = GameObject.Find("CursorManager").GetComponent<CursorManager>();
+        _commandFSM = GameObject.Find("CommandFSM").GetComponent<CommandFSM>();
+
         _enemyList = new List<GameObject>(_chrManager._enemyChrList);
         _playerList = new List<GameObject>(_chrManager._playerChrList);
-        _targetIndex = new List<int>();
+
         _commands = new List<ICommand>();
+
+        _targetIndex = new List<int> { 0, 0, 0, 0, 0 };
+
         _chrManager._currentCharacter = 0;
-
-        Debug.Log(_targetIndex);
-
-        //DetermineCommandSequence();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.O))
         {
-            StartCoroutine(ExecuteCommandSequence(1));
+            foreach (int i in _targetIndex)
+            {
+                Debug.Log(_targetIndex[i]);
+            }
         }
+      
     }
 
     private void DetermineCommandSequence()
     {
-        _commands = new List<ICommand>();
-        
+        for (int i = 0; i < _commands.Count; i++)
+        {
+            _commands.Sort(delegate (ICommand a, ICommand b)
+            {
+                return (b.Character.GetComponent<Attr>().SPD).CompareTo(a.Character.GetComponent<Attr>().SPD);
+            });
+
+        }
+
     }
 
     private IEnumerator ExecuteCommandSequence(float commandDuration)
     {
-        for(int i = 0; i < _commands.Count; i++)
+        Debug.Log(_commands.Count);
+        DetermineCommandSequence();
+        for (int i = 0; i < _commands.Count; i++)
         {
-            _commands[i].Execute(_enemyList, _targetIndex[i]);
+            if(_commands[i].Character.GetComponent<IPlayer>() != null)
+            {
+                _commands[i].Execute(_enemyList, _targetIndex[i]);
+
+                
+            }else if(_commands[i].Character.GetComponent<IEnemy>() != null)
+            {
+
+                _commands[i].Execute(_playerList, _targetIndex[i]);
+            }
+            
             yield return new WaitForSeconds(commandDuration);
-            if (i == _commands.Count - 1)
+
+            if (i == _commands.Count -1 )
             {
                 _commands.Clear();
-                _targetIndex.Clear();
+
+                _targetIndex = new List<int> { 0, 0, 0, 0, 0 };
+
+                _commandFSM.ChangeState(_commandFSM.Commanding);
             }
         }
     }
@@ -74,60 +107,72 @@ public class ActionManager : MonoBehaviour
         
     }
 
-    public void AddPhysicalCommand(string characterType)
+    public void AddPhysicalCommand(int abilityIndex)
     {
-        if(characterType == "Player")
+        _playerList = new List<GameObject>(_chrManager._playerChrList);
+
+        if (_chrManager._currentCharacter < _playerList.Count)
         {
-            if (_chrManager._currentCharacter < _playerList.Count)
+            _commands.Add(_playerList[_chrManager._currentCharacter].GetComponent<AbilityLoader>()._physicalAbilityList[abilityIndex]);
+
+            _chrManager._currentCharacter += 1;
+        }
+
+        
+    }
+
+    public void AddPhysicalCommand(int index, int abilityIndex)
+    {
+        _enemyList = new List<GameObject>(_chrManager._enemyChrList);
+        _commands.Add(_enemyList[index].GetComponent<AbilityLoader>()._physicalAbilityList[0]);
+
+    }
+
+    public void AddMagicalCommand(int abilityIndex)
+    {
+        _playerList = new List<GameObject>(_chrManager._playerChrList);
+
+        if (_chrManager._currentCharacter < _playerList.Count)
+        {
+            _commands.Add(_playerList[_chrManager._currentCharacter].GetComponent<AbilityLoader>()._magicalAbilityList[abilityIndex]);
+
+            _chrManager._currentCharacter += 1;
+        }
+
+    }
+
+    public void AddMagicalCommand(int index, int abilityIndex)
+    {
+        _enemyList = new List<GameObject>(_chrManager._enemyChrList);
+        _commands.Add(_enemyList[index].GetComponent<AbilityLoader>()._magicalAbilityList[abilityIndex]);
+    }
+
+    public void EnemyTageting(int enemyIndex, GameObject attacker)
+    {
+       for(int i =0; i < _chrManager._characterList.Count; i++)
+        {
+            if(attacker.name == _chrManager._characterList[i].name)
             {
-                Debug.Log(_chrManager._currentCharacter);
-                _commands.Add(_playerList[_chrManager._currentCharacter].GetComponent<AbilityLoader>()._physicalAbilityList[0]);
-                _chrManager._currentCharacter += 1;
-            }else if(_chrManager._currentCharacter == _playerList.Count)
-            {
-                _chrManager._currentCharacter = 0;
-                Debug.Log(_chrManager._currentCharacter);
-                _commands.Add(_playerList[_chrManager._currentCharacter].GetComponent<AbilityLoader>()._physicalAbilityList[0]);
-                
+                _targetIndex[i] = enemyIndex;
             }
-            
-        }else if(characterType == "Enemy")
+        }
+        
+
+    }
+
+    public void CancelCommand(int index)
+    {
+        _commands.Remove(_commands[index]);
+        if(_chrManager._currentCharacter != 0)
         {
-            _commands.Add(_enemyList[0].GetComponent<AbilityLoader>()._physicalAbilityList[0]);
+            _chrManager._currentCharacter -= 1;
         }
         
     }
 
-    public void AddMagicalCommand(string characterType)
+    public void ResetTarget()
     {
-        
-        if (characterType == "Player")
-        {
-            
-            if (_chrManager._currentCharacter < _playerList.Count)
-            {
-                Debug.Log(_chrManager._currentCharacter);
-                _commands.Add(_playerList[_chrManager._currentCharacter].GetComponent<AbilityLoader>()._magicalAbilityList[0]);
-                _chrManager._currentCharacter += 1;
-            }
-            else if (_chrManager._currentCharacter == _playerList.Count)
-            {
-                _chrManager._currentCharacter = 0;
-                Debug.Log(_chrManager._currentCharacter);
-                _commands.Add(_playerList[_chrManager._currentCharacter].GetComponent<AbilityLoader>()._magicalAbilityList[0]);
-            }
-
-        }else if (characterType == "Enemy")
-        {
-            _commands.Add(_enemyList[0].GetComponent<AbilityLoader>()._magicalAbilityList[0]);
-        }
+        _targetIndex.Clear();
     }
-
-    public void EnemyTageting(int enemyIndex)
-    {
-        _targetIndex.Add(enemyIndex);
-        Debug.Log(_targetIndex);
-    }
-    
 
 }

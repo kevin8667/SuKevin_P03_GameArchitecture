@@ -26,7 +26,6 @@ public class AbilityLoader : MonoBehaviour
     [SerializeField] int[] _MagicalAbilityCost;
 
 
-
     public List<PhysicAbility> _physicalAbilityList = new List<PhysicAbility>();
     public List<MagicallAbility> _magicalAbilityList = new List<MagicallAbility>();
 
@@ -34,18 +33,26 @@ public class AbilityLoader : MonoBehaviour
     private void Start()
     {
         _controller = GameObject.Find("BattleSceneController").GetComponent<BattleSceneController>();
-        for (int i =0; i < _physicalAbilityList.Count; i++)
-        {
-            //_physicalAbilityList[i] = new PhysicAbility(this.gameObject, _controller);
-            _physicalAbilityList[i] = ScriptableObject.CreateInstance<PhysicAbility>();
-            _physicalAbilityList[i].Init(gameObject, _controller, _physicalAbilityNames[i], _physicalAbilityTypes[i], _physicalAbilityPower[i], _physicalAbilityCost[i]);
-        }
 
-        for (int i = 0; i < _magicalAbilityList.Count; i++)
+        if(_physicalAbilityList.Count != 0)
         {
-            //_magicalAbilityList[i] = new MagicallAbility(this.gameObject, _controller);
-            _magicalAbilityList[i] = ScriptableObject.CreateInstance<MagicallAbility>();
-            _magicalAbilityList[i].Init(gameObject, _controller, _magicalAbilityNames[i], _magicalAbilityTypes[i], _MagicalAbilityPower[i], _MagicalAbilityCost[i]);
+            for (int i = 0; i < _physicalAbilityList.Count; i++)
+            {
+                //_physicalAbilityList[i] = new PhysicAbility(this.gameObject, _controller);
+                _physicalAbilityList[i] = ScriptableObject.CreateInstance<PhysicAbility>();
+                _physicalAbilityList[i].Init(gameObject, _controller, _physicalAbilityNames[i], _physicalAbilityTypes[i], _physicalAbilityPower[i], _physicalAbilityCost[i]);
+            }
         }
+        
+        if(_magicalAbilityList.Count != 0)
+        {
+            for (int i = 0; i < _magicalAbilityList.Count; i++)
+            {
+                //_magicalAbilityList[i] = new MagicallAbility(this.gameObject, _controller);
+                _magicalAbilityList[i] = ScriptableObject.CreateInstance<MagicallAbility>();
+                _magicalAbilityList[i].Init(gameObject, _controller, _magicalAbilityNames[i], _magicalAbilityTypes[i], _MagicalAbilityPower[i], _MagicalAbilityCost[i]);
+            }
+        }
+        
     }
 }

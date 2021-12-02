@@ -20,6 +20,18 @@ public class BattleSceneController : MonoBehaviour
     private Text _commandStateText;
 
     [SerializeField]
+    private Text _enemyTexts;
+
+    [SerializeField]
+    private Text[] _playerChrNameText;
+
+    [SerializeField]
+    private Text[] _playerChrHPText;
+
+    [SerializeField]
+    private Text[] _playerChrMPText;
+
+    [SerializeField]
     private Text _abilityText;
 
     [SerializeField]
@@ -31,6 +43,7 @@ public class BattleSceneController : MonoBehaviour
     [SerializeField]
     private GameObject _abilityPanel;
 
+
     public Text SceneStateText => _sceneStateText;
 
     public Text TurnStateText => _turnStateText;
@@ -41,11 +54,21 @@ public class BattleSceneController : MonoBehaviour
 
     public Text AbilityText => _abilityText;
 
+    public Text EnemyTexts => _enemyTexts;
+
+    public Text[] PlayerChrNameText => _playerChrNameText;
+
+    public Text[] PlayerChrHPText => _playerChrHPText;
+
+    public Text[] PlayerChrMPText => _playerChrMPText;
+
+
     public GameObject PauseMenu => _pauseMenu;
 
     public GameObject EndMenu => _endMenu;
 
     public GameObject AbilityPanel => _abilityPanel;
 
-    
+
+
 }

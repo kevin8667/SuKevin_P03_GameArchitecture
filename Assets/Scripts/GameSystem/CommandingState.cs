@@ -6,15 +6,22 @@ using UnityEngine.UI;
 public class CommandingState : State
 {
     Text _stateText;
+
     CommandFSM _stateMachine;
+
     GameObject[] _commandButtons;
 
+    EnemyManager _enemyManager;
 
-    public CommandingState(CommandFSM stateMachine, Text stateText, GameObject[] commandButtons)
+    BattleSceneController _battleSceneController;
+
+    public CommandingState(CommandFSM stateMachine, Text stateText, GameObject[] commandButtons, EnemyManager enemyManager, BattleSceneController battleSceneController)
     {
         _stateMachine = stateMachine;
         _stateText = stateText;
         _commandButtons = commandButtons;
+        _enemyManager = enemyManager;
+        _battleSceneController = battleSceneController;
     }
 
     // Start is called before the first frame update
@@ -23,12 +30,17 @@ public class CommandingState : State
 
         _stateText.text = "Commanding...";
 
+        _battleSceneController.AbilityPanel.SetActive(false);
+
+        _enemyManager.DecisionMaker();
+
         foreach (GameObject button in _commandButtons)
         {
             button.SetActive(true);
         }
 
         Debug.Log(_stateMachine.CurrentState);
+
 
     }
 

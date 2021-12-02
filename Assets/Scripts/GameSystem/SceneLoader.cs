@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    SceneFSM _sceneFSM;
 
     public void LoadScene(string sceneName)
     {
@@ -13,7 +14,7 @@ public class SceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _sceneFSM = GameObject.Find("SceneFSM").GetComponent<SceneFSM>();
     }
 
     // Update is called once per frame
@@ -21,11 +22,14 @@ public class SceneLoader : MonoBehaviour
     {
         if (Input.GetKeyDown("escape"))
         {
-            Application.Quit();
+            _sceneFSM.PauseGame();
         }
+        
         if (Input.GetKeyDown("backspace"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
+
     }
 }

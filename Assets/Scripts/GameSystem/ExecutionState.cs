@@ -42,9 +42,5 @@ public class ExecutionState : State
     public override void Update()
     {
         base.Update();
-        if (StateDuration >= 1.5f)
-        {
-            _stateMachine.ChangeState(_stateMachine.Commanding);
-        }
     }
 }
