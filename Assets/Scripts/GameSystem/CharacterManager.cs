@@ -65,16 +65,7 @@ public class CharacterManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {  
-            _SPDList.Sort();
-            _SPDList.Reverse();
-            for (int i = 0; i < _SPDList.Count; i++)
-            {
-                Debug.Log(_SPDList[i]);
-            }
 
-        }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -107,6 +98,8 @@ public class CharacterManager : MonoBehaviour
         
     }
 
+
+    //sorting the list comparing the speed attribute
     public void SortOrder(List<GameObject> _characterList)
     {
         if (_characterList.Count > 0)
@@ -119,25 +112,8 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public void PrintOrder(List<GameObject> _characterList)
-    {
-        for (int i = 0; i < _characterList.Count; i++)
-        {
-            if (_characterList[i].GetComponent<IPlayer>() != null)
-            {
-                _Iplayer = _characterList[i].GetComponent<IPlayer>();
-                _Iplayer.Execute(_characterList[i].name);
-            }
-            else if (_characterList[i].GetComponent<IPlayer>() == null && _characterList[i].GetComponent<IEnemy>() != null)
-            {
-                _IEnemy = _characterList[i].GetComponent<IEnemy>();
-                _IEnemy.Execute(_characterList[i].name);
-
-            }
-        }
-    }
     
-
+    //separate enemy and player characters into different lists
     public void ListEditor(List<GameObject> _characterList)
     {
         for (int i = 0; i < _characterList.Count; i++)
@@ -160,6 +136,7 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    //remove dead chracter from the current list
     public void RemoveDead()
     {
             

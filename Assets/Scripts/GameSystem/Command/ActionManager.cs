@@ -39,6 +39,7 @@ public class ActionManager : MonoBehaviour
 
         _commands = new List<ICommand>();
 
+        //initialize the taget(index) list
         _targetIndex = new List<int> { 0, 0, 0, 0, 0 };
 
         _chrManager._currentCharacter = 0;
@@ -47,13 +48,7 @@ public class ActionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            foreach (int i in _targetIndex)
-            {
-                Debug.Log(_targetIndex[i]);
-            }
-        }
+
       
     }
 
@@ -70,6 +65,8 @@ public class ActionManager : MonoBehaviour
 
     }
 
+
+    //execute the commands based on the information(taget, action order, etc.)
     private IEnumerator ExecuteCommandSequence(float commandDuration)
     {
         Debug.Log(_commands.Count);
@@ -100,6 +97,7 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+
     public void ExecuteCommands()
     {
         _chrManager._currentCharacter = 0;
@@ -121,6 +119,7 @@ public class ActionManager : MonoBehaviour
         
     }
 
+    //Overload for enemy to add command
     public void AddPhysicalCommand(int index, int abilityIndex)
     {
         _enemyList = new List<GameObject>(_chrManager._enemyChrList);
@@ -141,12 +140,15 @@ public class ActionManager : MonoBehaviour
 
     }
 
+    //Overload for enemy to add command
     public void AddMagicalCommand(int index, int abilityIndex)
     {
         _enemyList = new List<GameObject>(_chrManager._enemyChrList);
         _commands.Add(_enemyList[index].GetComponent<AbilityLoader>()._magicalAbilityList[abilityIndex]);
     }
 
+
+    //change the taget list
     public void EnemyTageting(int enemyIndex, GameObject attacker)
     {
        for(int i =0; i < _chrManager._characterList.Count; i++)
@@ -160,6 +162,7 @@ public class ActionManager : MonoBehaviour
 
     }
 
+    //remove the command
     public void CancelCommand(int index)
     {
         _commands.Remove(_commands[index]);
@@ -170,9 +173,6 @@ public class ActionManager : MonoBehaviour
         
     }
 
-    public void ResetTarget()
-    {
-        _targetIndex.Clear();
-    }
+  
 
 }

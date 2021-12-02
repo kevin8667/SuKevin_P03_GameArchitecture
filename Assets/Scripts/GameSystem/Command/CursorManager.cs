@@ -262,7 +262,7 @@ public class CursorManager : MonoBehaviour
     }
 
 
-
+    //make decision and pass it out
     private void Decide()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -406,6 +406,7 @@ public class CursorManager : MonoBehaviour
 
     }
 
+    //cacel the current selection
     private void Cancel()
     {
         if (Input.GetKeyDown(KeyCode.X))

@@ -32,6 +32,7 @@ public class CommandingState : State
 
         _battleSceneController.AbilityPanel.SetActive(false);
 
+        //enemy makes desicion when enters the commanding state
         _enemyManager.DecisionMaker();
 
         foreach (GameObject button in _commandButtons)

@@ -23,6 +23,8 @@ public class EnemyManager : MonoBehaviour
         
     }
 
+
+    //ramdomize the enemy action
     public void DecisionMaker()
     {
         _playChrList = new List<GameObject>(_characterManager._playerChrList);
